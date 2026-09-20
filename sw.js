@@ -1,7 +1,7 @@
-const CACHE_NAME = 'c3-tra-cuu-v1';
+const CACHE_NAME = 'c3-tra-cuu-v2';
 const urlsToCache = [
-  '/',
-  '/index.html',
+  './',
+  './index.html',
   'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2'
 ];
 
