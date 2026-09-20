@@ -35,7 +35,7 @@
             Đấu dây tín hiệu DCU và Công tơ
         </button>
         <button class="btn-menu" style="background-color: #28a745;" 
-            onclick="alert('Chức năng này đang được phát triển!')">
+            onclick="openTab('modemTab')">
             Đấu dây tín hiệu Modem và Công tơ
         </button>
         <button class="btn-menu" style="background-color: #17a2b8;" 
@@ -76,6 +76,26 @@
         </div>
     </div>
 
+    <!-- MÀN HÌNH 2B: TRA CỨU MODEM -->
+    <div id="modemTab" style="display: none;">
+        <button class="btn-back" onclick="goHome()">⬅ Quay lại</button>
+        <h2>Tra cứu Đấu dây Modem & Công tơ</h2>
+        
+        <label>Chọn loại Modem:</label>
+        <select id="modemSelect">
+            <option value="">-- Đang tải dữ liệu --</option>
+        </select>
+        
+        <label>Chọn loại Công tơ:</label>
+        <select id="congToModemSelect">
+            <option value="">-- Đang tải dữ liệu --</option>
+        </select>
+        
+        <div id="resultModem" class="result-box">
+            <b>Đang kết nối tải dữ liệu...</b>
+        </div>
+    </div>
+
     <!-- MÀN HÌNH 3: DỮ LIỆU TRÊN MÁY -->
     <div id="offlineTab" style="display: none;">
         <button class="btn-back" onclick="goHome()">⬅ Quay lại</button>
@@ -107,12 +127,16 @@
                 try {
                     const { data: dcuData } = await _supabase.from('Bang DCU').select('*');
                     const { data: ctData } = await _supabase.from('Bang Cong To').select('*');
+                    const { data: modemData } = await _supabase.from('Bang MODEM').select('*');
+                    
                     if (dcuData) localStorage.setItem('dcuList', JSON.stringify(dcuData));
                     if (ctData) localStorage.setItem('ctList', JSON.stringify(ctData));
+                    if (modemData) localStorage.setItem('modemList', JSON.stringify(modemData));
                     
                     let now = new Date().toLocaleString('vi-VN');
                     localStorage.setItem('dcuList_time', now);
                     localStorage.setItem('ctList_time', now);
+                    localStorage.setItem('modemList_time', now);
                 } catch (e) {}
             }
 
@@ -125,28 +149,48 @@
         function renderDropdowns() {
             const localDcu = JSON.parse(localStorage.getItem('dcuList'));
             const localCt = JSON.parse(localStorage.getItem('ctList'));
+            const localModem = JSON.parse(localStorage.getItem('modemList'));
             
             const dcuSelect = document.getElementById('dcuSelect');
             dcuSelect.innerHTML = '<option value="">-- Chọn DCU --</option>';
-            if (localDcu) {
-                localDcu.forEach(item => {
-                    dcuSelect.innerHTML += 
-                        `<option value="${item['Tín Hiệu']}">${item['Loại DCU']}</option>`;
-                });
-            }
+            if (localDcu) localDcu.forEach(item => {
+                dcuSelect.innerHTML += `<option value="${item['Tín Hiệu']}">${item['Loại DCU']}</option>`;
+            });
 
             const congToSelect = document.getElementById('congToSelect');
             congToSelect.innerHTML = '<option value="">-- Chọn Công tơ --</option>';
-            if (localCt) {
-                localCt.forEach(item => {
-                    congToSelect.innerHTML += 
-                        `<option value="${item['Tín Hiệu']}">${item['Loại Công Tơ']}</option>`;
-                });
-            }
-            
-            document.getElementById('result').innerHTML = 
-                "<b>Đã tải dữ liệu xong. Sẵn sàng tra cứu!</b>";
+            if (localCt) localCt.forEach(item => {
+                congToSelect.innerHTML += `<option value="${item['Tín Hiệu']}">${item['Loại Công Tơ']}</option>`;
+            });
+            document.getElementById('result').innerHTML = "<b>Đã tải dữ liệu xong. Sẵn sàng tra cứu!</b>";
+
+            const modemSelect = document.getElementById('modemSelect');
+            modemSelect.innerHTML = '<option value="">-- Chọn Modem --</option>';
+            if (localModem) localModem.forEach(item => {
+                modemSelect.innerHTML += `<option value="${item['Tín Hiệu']}">${item['Loại MODEM']}</option>`;
+            });
+
+            const congToModemSelect = document.getElementById('congToModemSelect');
+            congToModemSelect.innerHTML = '<option value="">-- Chọn Công tơ --</option>';
+            if (localCt) localCt.forEach(item => {
+                congToModemSelect.innerHTML += `<option value="${item['Tín Hiệu']}">${item['Loại Công Tơ']}</option>`;
+            });
+            document.getElementById('resultModem').innerHTML = "<b>Đã tải dữ liệu xong. Sẵn sàng tra cứu!</b>";
         }
+
+        function showModemResult() {
+            const modemSig = document.getElementById('modemSelect').value;
+            const ctSig = document.getElementById('congToModemSelect').value;
+            
+            let html = '<h3>Kết quả đấu dây:</h3>';
+            if(modemSig) html += `<p><b>Tín Hiệu Modem:</b> ${modemSig}</p>`;
+            if(ctSig) html += `<p><b>Tín Hiệu Công tơ:</b> ${ctSig}</p>`;
+            
+            document.getElementById('resultModem').innerHTML = html;
+        }
+
+        document.getElementById('modemSelect').addEventListener('change', showModemResult);
+        document.getElementById('congToModemSelect').addEventListener('change', showModemResult);
 
         async function checkOfflineData() {
             const listDiv = document.getElementById('offlineList');
@@ -273,6 +317,7 @@
         function openTab(tabId) {
             document.getElementById('homeScreen').style.display = 'none';
             document.getElementById('dcuTab').style.display = 'none';
+            document.getElementById('modemTab').style.display = 'none';
             document.getElementById('offlineTab').style.display = 'none';
             
             document.getElementById(tabId).style.display = 'block';
@@ -280,6 +325,7 @@
 
         function goHome() {
             document.getElementById('dcuTab').style.display = 'none';
+            document.getElementById('modemTab').style.display = 'none';
             document.getElementById('offlineTab').style.display = 'none';
             document.getElementById('homeScreen').style.display = 'block';
         }
