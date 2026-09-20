@@ -1,4 +1,4 @@
-const CACHE_NAME = 'c3-tra-cuu-v2';
+const CACHE_NAME = 'do-xa-1.02';
 const urlsToCache = [
   './',
   './index.html',
