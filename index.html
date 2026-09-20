@@ -30,28 +30,22 @@
             <span id="appVersion" style="font-weight: bold; color: #007bff;">Đang tải...</span> <br>
             <span id="syncTime" style="font-size: 14px; color: #28a745;">Đang kiểm tra...</span>
         </p>
-        <button class="btn-menu" style="background-color: #007bff;" 
-            onclick="openTab('dcuTab')">
+        <button class="btn-menu" style="background-color: #007bff;" onclick="openTab('dcuTab')">
             Đấu dây tín hiệu DCU và Công tơ
         </button>
-        <button class="btn-menu" style="background-color: #28a745;" 
-            onclick="openTab('modemTab')">
+        <button class="btn-menu" style="background-color: #28a745;" onclick="openTab('modemTab')">
             Đấu dây tín hiệu Modem và Công tơ
         </button>
-        <button class="btn-menu" style="background-color: #17a2b8;" 
-            onclick="alert('Chức năng này đang được phát triển!')">
+        <button class="btn-menu" style="background-color: #17a2b8;" onclick="alert('Chức năng đang phát triển!')">
             Hướng dẫn lắp đặt
         </button>
-        <button class="btn-menu" style="background-color: #fd7e14;" 
-            onclick="alert('Chức năng này đang được phát triển!')">
+        <button class="btn-menu" style="background-color: #fd7e14;" onclick="alert('Chức năng đang phát triển!')">
             Hướng dẫn khai báo
         </button>
-        <button class="btn-menu" style="background-color: #6f42c1;" 
-            onclick="alert('Chức năng này đang được phát triển!')">
+        <button class="btn-menu" style="background-color: #6f42c1;" onclick="alert('Chức năng đang phát triển!')">
             Cấu hình và xử lý
         </button>
-        <button class="btn-menu" style="background-color: #6c757d;" 
-            onclick="openTab('offlineTab'); checkOfflineData();">
+        <button class="btn-menu" style="background-color: #6c757d;" onclick="openTab('offlineTab'); checkOfflineData();">
             DỮ LIỆU TRÊN MÁY
         </button>
     </div>
@@ -60,93 +54,68 @@
     <div id="dcuTab" style="display: none;">
         <button class="btn-back" onclick="goHome()">⬅ Quay lại</button>
         <h2>Tra cứu Đấu dây DCU & Công tơ</h2>
-        
         <label>Chọn loại DCU:</label>
         <div style="display: flex; gap: 10px; margin-bottom: 15px;">
-            <select id="dcuSelect" style="margin-bottom: 0;">
-                <option value="">-- Đang tải --</option>
-            </select>
-            <button class="btn-menu" style="width: 60px; height: auto; margin-bottom: 0; 
-                padding: 10px;" onclick="viewImage('DCU', 'dcuSelect')">🖼️</button>
+            <select id="dcuSelect" style="margin-bottom: 0;"><option value="">-- Đang tải --</option></select>
+            <button class="btn-menu" style="width: 60px; height: auto; margin-bottom: 0; padding: 10px;" onclick="viewImage('DCU', 'dcuSelect')">🖼️</button>
         </div>
-        
         <label>Chọn loại Công tơ:</label>
         <div style="display: flex; gap: 10px; margin-bottom: 15px;">
-            <select id="congToSelect" style="margin-bottom: 0;">
-                <option value="">-- Đang tải --</option>
-            </select>
-            <button class="btn-menu" style="width: 60px; height: auto; margin-bottom: 0; 
-                padding: 10px;" onclick="viewImage('CONGTO', 'congToSelect')">🖼️</button>
+            <select id="congToSelect" style="margin-bottom: 0;"><option value="">-- Đang tải --</option></select>
+            <button class="btn-menu" style="width: 60px; height: auto; margin-bottom: 0; padding: 10px;" onclick="viewImage('CONGTO', 'congToSelect')">🖼️</button>
         </div>
-        
-        <div id="result" class="result-box">
-            <b>Đang kết nối tải dữ liệu...</b>
-        </div>
+        <div id="result" class="result-box"><b>Đang kết nối tải dữ liệu...</b></div>
     </div>
 
     <!-- MÀN HÌNH 2B: TRA CỨU MODEM -->
     <div id="modemTab" style="display: none;">
         <button class="btn-back" onclick="goHome()">⬅ Quay lại</button>
         <h2>Tra cứu Đấu dây Modem & Công tơ</h2>
-
         <label>Chọn loại Modem:</label>
         <div style="display: flex; gap: 10px; margin-bottom: 15px;">
-            <select id="modemSelect" style="margin-bottom: 0;">
-                <option value="">-- Đang tải --</option>
-            </select>
-            <button class="btn-menu" style="width: 60px; height: auto; margin-bottom: 0; 
-                padding: 10px;" onclick="viewImage('MODEM', 'modemSelect')">🖼️</button>
+            <select id="modemSelect" style="margin-bottom: 0;"><option value="">-- Đang tải --</option></select>
+            <button class="btn-menu" style="width: 60px; height: auto; margin-bottom: 0; padding: 10px;" onclick="viewImage('MODEM', 'modemSelect')">🖼️</button>
         </div>
-        
         <label>Chọn loại Công tơ:</label>
         <div style="display: flex; gap: 10px; margin-bottom: 15px;">
-            <select id="congToModemSelect" style="margin-bottom: 0;">
-                <option value="">-- Đang tải --</option>
-            </select>
-            <button class="btn-menu" style="width: 60px; height: auto; margin-bottom: 0; 
-                padding: 10px;" onclick="viewImage('CONGTO', 'congToModemSelect')">🖼️</button>
+            <select id="congToModemSelect" style="margin-bottom: 0;"><option value="">-- Đang tải --</option></select>
+            <button class="btn-menu" style="width: 60px; height: auto; margin-bottom: 0; padding: 10px;" onclick="viewImage('CONGTO', 'congToModemSelect')">🖼️</button>
         </div>
-
-        <div id="resultModem" class="result-box">
-            <b>Đang kết nối tải dữ liệu...</b>
-        </div>
+        <div id="resultModem" class="result-box"><b>Đang kết nối tải dữ liệu...</b></div>
     </div>
 
     <!-- MÀN HÌNH 3: DỮ LIỆU TRÊN MÁY -->
     <div id="offlineTab" style="display: none;">
         <button class="btn-back" onclick="goHome()">⬅ Quay lại</button>
         <h2>Quản lý Dữ Liệu Trên Máy</h2>
-        <button class="btn-menu" style="background-color: #17a2b8; height: 45px; 
-            margin-bottom: 15px; font-size: 15px;" onclick="updateAllFiles()" id="btnUpdateAll">
+        <button class="btn-menu" style="background-color: #17a2b8; height: 45px; margin-bottom: 15px; font-size: 15px;" onclick="updateAllFiles()" id="btnUpdateAll">
             🔄 Cập nhật tất cả
         </button>
-        <div id="offlineList" style="border: 1px solid #ccc; border-radius: 8px; padding: 10px;">
-            <!-- Danh sách file sẽ được JavaScript tạo ra ở đây -->
-        </div>
+        <div id="offlineList" style="border: 1px solid #ccc; border-radius: 8px; padding: 10px;"></div>
     </div>
 
     <!-- MÀN HÌNH XEM ẢNH -->
-    <div id="imageModal" style="display: none; position: fixed; top: 0; left: 0; 
-        width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; 
-        justify-content: center; align-items: center; flex-direction: column;"
-        onclick="closeImage()">
-
-        <button type="button" onclick="closeImage(); event.stopPropagation();"
-            style="background: #dc3545; color: white; border: none; padding: 10px 30px; 
-            border-radius: 8px; margin-bottom: 15px; width: auto; font-weight: bold;">
+    <div id="imageModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; justify-content: center; align-items: center; flex-direction: column;" onclick="closeImage()">
+        <button type="button" onclick="closeImage(); event.stopPropagation();" style="background: #dc3545; color: white; border: none; padding: 10px 30px; border-radius: 8px; margin-bottom: 15px; width: auto; font-weight: bold;">
             ❌ Đóng ảnh
         </button>
-
-        <img id="modalImg" src="" style="max-width: 95%; max-height: 80%; 
-            border-radius: 8px; background: white;" alt="Đang tải ảnh..." 
-            onclick="event.stopPropagation();"
-            onerror="this.onerror=null; this.alt='Không có ảnh!';">
+        <img id="modalImg" src="" style="max-width: 95%; max-height: 80%; border-radius: 8px; background: white;" alt="Đang tải ảnh..." onclick="event.stopPropagation();" onerror="this.onerror=null; this.alt='Không có ảnh!';">
     </div>
 
     <!-- Bắt đầu phần mã JavaScript -->
     <script>
-        // Thay URL và KEY của Supabase vào đây
         const _supabase = supabase.createClient('https://kezzrlltzddpdtktfqzk.supabase.co', 'sb_publishable_-OA922t0e8G3z3hM0hwguQ_GIAaGmec');
+        let currentCacheName = 'do-xa-v1.09'; 
+
+        // Cấu hình danh sách (đã thêm dạng 'image')
+        const dbFiles = [
+            { name: 'Bang DCU', key: 'dcuList', type: 'db' },
+            { name: 'Bang Cong To', key: 'ctList', type: 'db' },
+            { name: 'Bang MODEM', key: 'modemList', type: 'db' },
+            { name: 'Hình Ảnh Thiết Bị', key: 'imageList', type: 'image' }
+        ];
+        
+        let tempData = {}; 
 
         function viewImage(prefix, selectId) {
             const sel = document.getElementById(selectId);
@@ -154,16 +123,10 @@
                 alert("Vui lòng chọn thiết bị trước khi xem ảnh!");
                 return;
             }
-            
             const deviceName = sel.options[sel.selectedIndex].text;
-            const fileName = `${prefix}_${deviceName}.png`; // Đã sửa đuôi .jpg thành .png
-            
-            // Cấu hình đường dẫn Storage của Supabase
-            const baseUrl = 'https://kezzrlltzddpdtktfqzk.supabase.co/storage/v1/object/public';
-            const bucketName = 'images'; 
-            const imgUrl = `${baseUrl}/${bucketName}/${fileName}`;
-            
-            document.getElementById('modalImg').src = imgUrl;
+            const fileName = `${prefix}_${deviceName}.png`; 
+            const baseUrl = 'https://kezzrlltzddpdtktfqzk.supabase.co/storage/v1/object/public/images';
+            document.getElementById('modalImg').src = `${baseUrl}/${fileName}`;
             document.getElementById('imageModal').style.display = 'flex';
         }
 
@@ -171,14 +134,18 @@
             document.getElementById('imageModal').style.display = 'none';
         }
 
-        // Cấu hình danh sách các bảng dữ liệu
-        const dbFiles = [
-            { name: 'Bang DCU', key: 'dcuList' },
-            { name: 'Bang Cong To', key: 'ctList' },
-            { name: 'Bang MODEM', key: 'modemList' }
-        ];
-        
-        let tempData = {}; 
+        function getExpectedImageUrls() {
+            const urls = new Set();
+            const baseUrl = 'https://kezzrlltzddpdtktfqzk.supabase.co/storage/v1/object/public/images';
+            const dcus = JSON.parse(localStorage.getItem('dcuList')) || [];
+            const cts = JSON.parse(localStorage.getItem('ctList')) || [];
+            const modems = JSON.parse(localStorage.getItem('modemList')) || [];
+
+            dcus.forEach(d => { if(d['Loại DCU']) urls.add(`${baseUrl}/DCU_${d['Loại DCU']}.png`); });
+            cts.forEach(c => { if(c['Loại Công Tơ']) urls.add(`${baseUrl}/CONGTO_${c['Loại Công Tơ']}.png`); });
+            modems.forEach(m => { if(m['Loại MODEM']) urls.add(`${baseUrl}/MODEM_${m['Loại MODEM']}.png`); });
+            return Array.from(urls);
+        }
 
         async function loadData() {
             if (!localStorage.getItem('dcuList') && navigator.onLine) {
@@ -197,9 +164,7 @@
                     localStorage.setItem('modemList_time', now);
                 } catch (e) {}
             }
-
             renderDropdowns();
-            
             const saved = localStorage.getItem('dcuList_time') || 'Chưa đồng bộ';
             document.getElementById('syncTime').innerText = "Cập nhật: " + saved;
         }
@@ -211,44 +176,70 @@
             
             const dcuSelect = document.getElementById('dcuSelect');
             dcuSelect.innerHTML = '<option value="">-- Chọn DCU --</option>';
-            if (localDcu) localDcu.forEach(item => {
-                dcuSelect.innerHTML += `<option value="${item['Tín Hiệu']}">${item['Loại DCU']}</option>`;
-            });
+            if (localDcu) localDcu.forEach(item => dcuSelect.innerHTML += `<option value="${item['Tín Hiệu']}">${item['Loại DCU']}</option>`);
 
             const congToSelect = document.getElementById('congToSelect');
             congToSelect.innerHTML = '<option value="">-- Chọn Công tơ --</option>';
-            if (localCt) localCt.forEach(item => {
-                congToSelect.innerHTML += `<option value="${item['Tín Hiệu']}">${item['Loại Công Tơ']}</option>`;
-            });
-            document.getElementById('result').innerHTML = "<b>Đã tải dữ liệu xong. Sẵn sàng tra cứu!</b>";
-
+            if (localCt) localCt.forEach(item => congToSelect.innerHTML += `<option value="${item['Tín Hiệu']}">${item['Loại Công Tơ']}</option>`);
+            
             const modemSelect = document.getElementById('modemSelect');
             modemSelect.innerHTML = '<option value="">-- Chọn Modem --</option>';
-            if (localModem) localModem.forEach(item => {
-                modemSelect.innerHTML += `<option value="${item['Tín Hiệu']}">${item['Loại MODEM']}</option>`;
-            });
+            if (localModem) localModem.forEach(item => modemSelect.innerHTML += `<option value="${item['Tín Hiệu']}">${item['Loại MODEM']}</option>`);
 
             const congToModemSelect = document.getElementById('congToModemSelect');
             congToModemSelect.innerHTML = '<option value="">-- Chọn Công tơ --</option>';
-            if (localCt) localCt.forEach(item => {
-                congToModemSelect.innerHTML += `<option value="${item['Tín Hiệu']}">${item['Loại Công Tơ']}</option>`;
-            });
+            if (localCt) localCt.forEach(item => congToModemSelect.innerHTML += `<option value="${item['Tín Hiệu']}">${item['Loại Công Tơ']}</option>`);
+            
+            document.getElementById('result').innerHTML = "<b>Đã tải dữ liệu xong. Sẵn sàng tra cứu!</b>";
             document.getElementById('resultModem').innerHTML = "<b>Đã tải dữ liệu xong. Sẵn sàng tra cứu!</b>";
         }
 
         function showModemResult() {
             const modemSig = document.getElementById('modemSelect').value;
             const ctSig = document.getElementById('congToModemSelect').value;
-            
             let html = '<h3>Kết quả đấu dây:</h3>';
             if(modemSig) html += `<p><b>Tín Hiệu Modem:</b> ${modemSig}</p>`;
             if(ctSig) html += `<p><b>Tín Hiệu Công tơ:</b> ${ctSig}</p>`;
-            
             document.getElementById('resultModem').innerHTML = html;
+        }
+
+        function showResult() {
+            const dcuSig = document.getElementById('dcuSelect').value;
+            const ctSig = document.getElementById('congToSelect').value;
+            let html = '<h3>Kết quả đấu dây:</h3>';
+            if(dcuSig) html += `<p><b>Tín Hiệu DCU:</b> ${dcuSig}</p>`;
+            if(ctSig) html += `<p><b>Tín Hiệu Công tơ:</b> ${ctSig}</p>`;
+            document.getElementById('result').innerHTML = html;
         }
 
         document.getElementById('modemSelect').addEventListener('change', showModemResult);
         document.getElementById('congToModemSelect').addEventListener('change', showModemResult);
+        document.getElementById('dcuSelect').addEventListener('change', showResult);
+        document.getElementById('congToSelect').addEventListener('change', showResult);
+
+        async function updateImages() {
+            const btnContainer = document.getElementById('btn_imageList');
+            btnContainer.innerHTML = `<button class="btn-status" style="background-color: gray; color: white;" disabled>Đang tải...</button>`;
+            try {
+                const urls = getExpectedImageUrls();
+                const cache = await caches.open(currentCacheName);
+                await Promise.all(urls.map(async url => {
+                    try {
+                        const match = await cache.match(url);
+                        if (!match) {
+                            const response = await fetch(url);
+                            if (response.ok) await cache.put(url, response);
+                        }
+                    } catch(e) {}
+                }));
+                let now = new Date().toLocaleString('vi-VN');
+                localStorage.setItem('imageList_time', now);
+                document.getElementById('time_imageList').innerText = 'Lần tải: ' + now;
+                btnContainer.innerHTML = `<button class="btn-status" style="background-color: #ffc107; color: black;" disabled>Đã Mới Nhất</button>`;
+            } catch(e) {
+                btnContainer.innerHTML = `<button class="btn-status" style="background-color: #dc3545; color: white;" onclick="updateImages()">Lỗi tải</button>`;
+            }
+        }
 
         async function checkOfflineData() {
             const listDiv = document.getElementById('offlineList');
@@ -256,40 +247,51 @@
             for (let file of dbFiles) {
                 let lastSync = localStorage.getItem(file.key + '_time') || 'Chưa tải';
                 html += `<div class="list-item">
-                            <div>
-                                <b>${file.name}</b><br>
-                                <span style="font-size: 13px; color: gray;" id="time_${file.key}">
-                                    Lần tải: ${lastSync}
-                                </span>
-                            </div>
-                            <div id="btn_${file.key}">
-                                <span style="font-size: 13px; color: gray;">Đang kiểm tra...</span>
-                            </div>
+                            <div><b>${file.name}</b><br>
+                            <span style="font-size: 13px; color: gray;" id="time_${file.key}">Lần tải: ${lastSync}</span></div>
+                            <div id="btn_${file.key}"><span style="font-size: 13px; color: gray;">Đang kiểm tra...</span></div>
                          </div>`;
             }
             listDiv.innerHTML = html;
 
             for (let file of dbFiles) {
                 let btnContainer = document.getElementById('btn_' + file.key);
-                try {
-                    const { data } = await _supabase.from(file.name).select('*');
-                    if (data) {
-                        tempData[file.key] = data; 
-                        const localData = localStorage.getItem(file.key);
-                        
-                        if (JSON.stringify(data) !== localData) {
-                            btnContainer.innerHTML = `<button class="btn-status" 
-                                style="background-color: #28a745; color: white;" 
-                                onclick="updateFile('${file.key}')">Cần Cập Nhật</button>`;
-                        } else {
-                            btnContainer.innerHTML = `<button class="btn-status" 
-                                style="background-color: #ffc107; color: black;" disabled>
-                                Đã Mới Nhất</button>`;
+                if (file.type === 'db') {
+                    try {
+                        const { data } = await _supabase.from(file.name).select('*');
+                        if (data) {
+                            tempData[file.key] = data; 
+                            const localData = localStorage.getItem(file.key);
+                            if (JSON.stringify(data) !== localData) {
+                                btnContainer.innerHTML = `<button class="btn-status" style="background-color: #28a745; color: white;" onclick="updateFile('${file.key}')">Cần Cập Nhật</button>`;
+                            } else {
+                                btnContainer.innerHTML = `<button class="btn-status" style="background-color: #ffc107; color: black;" disabled>Đã Mới Nhất</button>`;
+                            }
                         }
+                    } catch (err) {
+                        btnContainer.innerHTML = `<button class="btn-status" style="background-color: gray; color: white;" disabled>Mất mạng</button>`;
                     }
-                } catch (err) {
-                    btnContainer.innerHTML = `<button class="btn-status" 
-                        style="background-color: gray; color: white;" disabled>Mất mạng</button>`;
+                } else if (file.type === 'image') {
+                    try {
+                        const urls = getExpectedImageUrls();
+                        if (urls.length === 0) {
+                            btnContainer.innerHTML = `<button class="btn-status" style="background-color: gray; color: white;" disabled>Trống</button>`;
+                            continue;
+                        }
+                        const cache = await caches.open(currentCacheName);
+                        let needsUpdate = false;
+                        for (let url of urls) {
+                            const match = await cache.match(url);
+                            if (!match) { needsUpdate = true; break; }
+                        }
+                        if (needsUpdate) {
+                            btnContainer.innerHTML = `<button class="btn-status" style="background-color: #28a745; color: white;" onclick="updateImages()">Cần Cập Nhật</button>`;
+                        } else {
+                            btnContainer.innerHTML = `<button class="btn-status" style="background-color: #ffc107; color: black;" disabled>Đã Mới Nhất</button>`;
+                        }
+                    } catch (err) {
+                        btnContainer.innerHTML = `<button class="btn-status" style="background-color: gray; color: white;" disabled>Lỗi</button>`;
+                    }
                 }
             }
         }
@@ -299,16 +301,10 @@
                 let now = new Date().toLocaleString('vi-VN');
                 localStorage.setItem(key, JSON.stringify(tempData[key]));
                 localStorage.setItem(key + '_time', now);
-                
                 document.getElementById('time_' + key).innerText = 'Lần tải: ' + now;
-                document.getElementById('btn_' + key).innerHTML = 
-                    `<button class="btn-status" style="background-color: #ffc107; color: black;" disabled>
-                    Đã Mới Nhất</button>`;
-                
+                document.getElementById('btn_' + key).innerHTML = `<button class="btn-status" style="background-color: #ffc107; color: black;" disabled>Đã Mới Nhất</button>`;
                 renderDropdowns(); 
-                if (key === 'dcuList') {
-                    document.getElementById('syncTime').innerText = "Cập nhật: " + now;
-                }
+                if (key === 'dcuList') document.getElementById('syncTime').innerText = "Cập nhật: " + now;
             }
         }
 
@@ -318,29 +314,27 @@
             btnAll.disabled = true;
 
             for (let file of dbFiles) {
-                if (!tempData[file.key]) {
-                    try {
-                        const { data } = await _supabase.from(file.name).select('*');
-                        if (data) tempData[file.key] = data;
-                    } catch (e) {}
-                }
-                
-                if (tempData[file.key]) {
-                    let now = new Date().toLocaleString('vi-VN');
-                    localStorage.setItem(file.key, JSON.stringify(tempData[file.key]));
-                    localStorage.setItem(file.key + '_time', now);
-                    
-                    document.getElementById('time_' + file.key).innerText = 'Lần tải: ' + now;
-                    document.getElementById('btn_' + file.key).innerHTML = 
-                        `<button class="btn-status" style="background-color: #ffc107; color: black;" disabled>
-                        Đã Mới Nhất</button>`;
+                if (file.type === 'db') {
+                    if (!tempData[file.key]) {
+                        try {
+                            const { data } = await _supabase.from(file.name).select('*');
+                            if (data) tempData[file.key] = data;
+                        } catch (e) {}
+                    }
+                    if (tempData[file.key]) {
+                        let now = new Date().toLocaleString('vi-VN');
+                        localStorage.setItem(file.key, JSON.stringify(tempData[file.key]));
+                        localStorage.setItem(file.key + '_time', now);
+                        document.getElementById('time_' + file.key).innerText = 'Lần tải: ' + now;
+                        document.getElementById('btn_' + file.key).innerHTML = `<button class="btn-status" style="background-color: #ffc107; color: black;" disabled>Đã Mới Nhất</button>`;
+                    }
+                } else if (file.type === 'image') {
+                    await updateImages();
                 }
             }
-            
             renderDropdowns();
             let dcuSync = localStorage.getItem('dcuList_time');
             if (dcuSync) document.getElementById('syncTime').innerText = "Cập nhật: " + dcuSync;
-            
             btnAll.innerText = "🔄 Cập nhật tất cả";
             btnAll.disabled = false;
         }
@@ -351,33 +345,17 @@
                 const text = await response.text();
                 const match = text.match(/const CACHE_NAME = '([^']+)'/);
                 if (match && match[1]) {
-                    document.getElementById('appVersion').innerText = match[1];
+                    currentCacheName = match[1];
+                    document.getElementById('appVersion').innerText = currentCacheName;
                 }
-            } catch (err) {
-                console.log("Lỗi đọc version từ sw.js");
-            }
+            } catch (err) {}
         }
-
-        function showResult() {
-            const dcuSig = document.getElementById('dcuSelect').value;
-            const ctSig = document.getElementById('congToSelect').value;
-            
-            let html = '<h3>Kết quả đấu dây:</h3>';
-            if(dcuSig) html += `<p><b>Tín Hiệu DCU:</b> ${dcuSig}</p>`;
-            if(ctSig) html += `<p><b>Tín Hiệu Công tơ:</b> ${ctSig}</p>`;
-            
-            document.getElementById('result').innerHTML = html;
-        }
-
-        document.getElementById('dcuSelect').addEventListener('change', showResult);
-        document.getElementById('congToSelect').addEventListener('change', showResult);
 
         function openTab(tabId) {
             document.getElementById('homeScreen').style.display = 'none';
             document.getElementById('dcuTab').style.display = 'none';
             document.getElementById('modemTab').style.display = 'none';
             document.getElementById('offlineTab').style.display = 'none';
-            
             document.getElementById(tabId).style.display = 'block';
         }
 
@@ -390,13 +368,9 @@
 
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('./sw.js');
-            
             let refreshing = false;
             navigator.serviceWorker.addEventListener('controllerchange', () => {
-                if (!refreshing) {
-                    refreshing = true;
-                    window.location.reload();
-                }
+                if (!refreshing) { refreshing = true; window.location.reload(); }
             });
         }
         
