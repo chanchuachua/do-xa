@@ -40,7 +40,7 @@
         </button>
         <button class="btn-menu" style="background-color: #6c757d;" 
             onclick="openTab('offlineTab'); checkOfflineData();">
-            Dữ Liệu Offline
+            DỮ LIỆU TRÊN MÁY
         </button>
     </div>
 
@@ -64,10 +64,14 @@
         </div>
     </div>
 
-    <!-- MÀN HÌNH 3: DỮ LIỆU OFFLINE -->
+    <!-- MÀN HÌNH 3: DỮ LIỆU TRÊN MÁY -->
     <div id="offlineTab" style="display: none;">
         <button class="btn-back" onclick="goHome()">⬅ Quay lại</button>
-        <h2>Quản lý Dữ Liệu Offline</h2>
+        <h2>Quản lý Dữ Liệu Trên Máy</h2>
+        <button class="btn-menu" style="background-color: #17a2b8; height: 45px; 
+            margin-bottom: 15px; font-size: 15px;" onclick="updateAllFiles()" id="btnUpdateAll">
+            🔄 Cập nhật tất cả
+        </button>
         <div id="offlineList" style="border: 1px solid #ccc; border-radius: 8px; padding: 10px;">
             <!-- Danh sách file sẽ được JavaScript tạo ra ở đây -->
         </div>
@@ -134,13 +138,25 @@
 
         async function checkOfflineData() {
             const listDiv = document.getElementById('offlineList');
-            listDiv.innerHTML = '<p>Đang kiểm tra dữ liệu trên máy chủ...</p>';
-            
             let html = '';
             for (let file of dbFiles) {
-                let statusBtn = '';
                 let lastSync = localStorage.getItem(file.key + '_time') || 'Chưa tải';
-                
+                html += `<div class="list-item">
+                            <div>
+                                <b>${file.name}</b><br>
+                                <span style="font-size: 13px; color: gray;" id="time_${file.key}">
+                                    Lần tải: ${lastSync}
+                                </span>
+                            </div>
+                            <div id="btn_${file.key}">
+                                <span style="font-size: 13px; color: gray;">Đang kiểm tra...</span>
+                            </div>
+                         </div>`;
+            }
+            listDiv.innerHTML = html;
+
+            for (let file of dbFiles) {
+                let btnContainer = document.getElementById('btn_' + file.key);
                 try {
                     const { data } = await _supabase.from(file.name).select('*');
                     if (data) {
@@ -148,47 +164,71 @@
                         const localData = localStorage.getItem(file.key);
                         
                         if (JSON.stringify(data) !== localData) {
-                            statusBtn = `<button class="btn-status" style="background-color: #28a745; color: white;" 
-                                          onclick="updateFile('${file.key}')">
-                                          Cần Cập Nhật
-                                         </button>`;
+                            btnContainer.innerHTML = `<button class="btn-status" 
+                                style="background-color: #28a745; color: white;" 
+                                onclick="updateFile('${file.key}')">Cần Cập Nhật</button>`;
                         } else {
-                            statusBtn = `<button class="btn-status" style="background-color: #ffc107; color: black;" disabled>
-                                          Đã Mới Nhất
-                                         </button>`;
+                            btnContainer.innerHTML = `<button class="btn-status" 
+                                style="background-color: #ffc107; color: black;" disabled>
+                                Đã Mới Nhất</button>`;
                         }
                     }
                 } catch (err) {
-                    statusBtn = `<button class="btn-status" style="background-color: gray; color: white;" disabled>
-                                  Mất mạng
-                                 </button>`;
+                    btnContainer.innerHTML = `<button class="btn-status" 
+                        style="background-color: gray; color: white;" disabled>Mất mạng</button>`;
                 }
-
-                html += `<div class="list-item">
-                            <div>
-                                <b>${file.name}</b><br>
-                                <span style="font-size: 13px; color: gray;">
-                                    Lần tải: ${lastSync}
-                                </span>
-                            </div>
-                            <div>${statusBtn}</div>
-                         </div>`;
             }
-            listDiv.innerHTML = html;
         }
 
         function updateFile(key) {
             if (tempData[key]) {
+                let now = new Date().toLocaleString('vi-VN');
                 localStorage.setItem(key, JSON.stringify(tempData[key]));
-                localStorage.setItem(key + '_time', new Date().toLocaleString('vi-VN'));
-                checkOfflineData(); 
-                renderDropdowns(); 
+                localStorage.setItem(key + '_time', now);
                 
+                document.getElementById('time_' + key).innerText = 'Lần tải: ' + now;
+                document.getElementById('btn_' + key).innerHTML = 
+                    `<button class="btn-status" style="background-color: #ffc107; color: black;" disabled>
+                    Đã Mới Nhất</button>`;
+                
+                renderDropdowns(); 
                 if (key === 'dcuList') {
-                    document.getElementById('syncTime').innerText = 
-                        "Cập nhật: " + localStorage.getItem('dcuList_time');
+                    document.getElementById('syncTime').innerText = "Cập nhật: " + now;
                 }
             }
+        }
+
+        async function updateAllFiles() {
+            const btnAll = document.getElementById('btnUpdateAll');
+            btnAll.innerText = "Đang cập nhật...";
+            btnAll.disabled = true;
+
+            for (let file of dbFiles) {
+                if (!tempData[file.key]) {
+                    try {
+                        const { data } = await _supabase.from(file.name).select('*');
+                        if (data) tempData[file.key] = data;
+                    } catch (e) {}
+                }
+                
+                if (tempData[file.key]) {
+                    let now = new Date().toLocaleString('vi-VN');
+                    localStorage.setItem(file.key, JSON.stringify(tempData[file.key]));
+                    localStorage.setItem(file.key + '_time', now);
+                    
+                    document.getElementById('time_' + file.key).innerText = 'Lần tải: ' + now;
+                    document.getElementById('btn_' + file.key).innerHTML = 
+                        `<button class="btn-status" style="background-color: #ffc107; color: black;" disabled>
+                        Đã Mới Nhất</button>`;
+                }
+            }
+            
+            renderDropdowns();
+            let dcuSync = localStorage.getItem('dcuList_time');
+            if (dcuSync) document.getElementById('syncTime').innerText = "Cập nhật: " + dcuSync;
+            
+            btnAll.innerText = "🔄 Cập nhật tất cả";
+            btnAll.disabled = false;
         }
 
         async function getVersion() {
