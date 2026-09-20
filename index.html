@@ -45,8 +45,13 @@
         <button class="btn-menu" style="background-color: #6f42c1;" onclick="alert('Chức năng đang phát triển!')">
             Cấu hình và xử lý
         </button>
-        <button class="btn-menu" style="background-color: #6c757d;" onclick="openTab('offlineTab'); checkOfflineData();">
-            DỮ LIỆU TRÊN MÁY
+        <button class="btn-menu" style="background-color: #6c757d; display: flex; 
+            flex-direction: column; align-items: center; justify-content: center;" 
+            onclick="openTab('offlineTab'); checkOfflineData();">
+            <span>DỮ LIỆU TRÊN MÁY</span>
+            <span id="badgeUpdate" style="display: none; font-size: 13px; color: #ffc107; margin-top: 5px;">
+                ⚠️ Có cập nhật mới
+            </span>
         </button>
     </div>
 
@@ -134,6 +139,29 @@
             document.getElementById('imageModal').style.display = 'none';
         }
 
+        async function notifyUpdateBadge() {
+            if (!navigator.onLine) return;
+            let hasUpdate = false;
+            for (let file of dbFiles) {
+                if (file.type === 'db') {
+                    try {
+                        const { data } = await _supabase.from(file.name).select('*');
+                        const localData = localStorage.getItem(file.key);
+                        if (data && JSON.stringify(data) !== localData) {
+                            hasUpdate = true; break;
+                        }
+                    } catch(e) {}
+                } else if (file.type === 'image') {
+                    const expectedUrls = getExpectedImageUrls();
+                    const syncedUrls = JSON.parse(localStorage.getItem('imageList_synced') || '[]');
+                    if (JSON.stringify(expectedUrls) !== JSON.stringify(syncedUrls)) {
+                        hasUpdate = true; break;
+                    }
+                }
+            }
+            document.getElementById('badgeUpdate').style.display = hasUpdate ? 'block' : 'none';
+        }
+
         function getExpectedImageUrls() {
             const urls = new Set();
             const baseUrl = 'https://kezzrlltzddpdtktfqzk.supabase.co/storage/v1/object/public/images';
@@ -167,6 +195,9 @@
             renderDropdowns();
             const saved = localStorage.getItem('dcuList_time') || 'Chưa đồng bộ';
             document.getElementById('syncTime').innerText = "Cập nhật: " + saved;
+            
+            // Gọi hàm check thông báo chạy ngầm
+            notifyUpdateBadge();
         }
 
         function renderDropdowns() {
@@ -234,8 +265,13 @@
                 }));
                 let now = new Date().toLocaleString('vi-VN');
                 localStorage.setItem('imageList_time', now);
+                
+                // Lưu lại mốc danh sách ảnh đã đồng bộ để không báo lỗi ảo
+                localStorage.setItem('imageList_synced', JSON.stringify(urls)); 
+                
                 document.getElementById('time_imageList').innerText = 'Lần tải: ' + now;
                 btnContainer.innerHTML = `<button class="btn-status" style="background-color: #ffc107; color: black;" disabled>Đã Mới Nhất</button>`;
+                notifyUpdateBadge();
             } catch(e) {
                 btnContainer.innerHTML = `<button class="btn-status" style="background-color: #dc3545; color: white;" onclick="updateImages()">Lỗi tải</button>`;
             }
@@ -272,25 +308,14 @@
                         btnContainer.innerHTML = `<button class="btn-status" style="background-color: gray; color: white;" disabled>Mất mạng</button>`;
                     }
                 } else if (file.type === 'image') {
-                    try {
-                        const urls = getExpectedImageUrls();
-                        if (urls.length === 0) {
-                            btnContainer.innerHTML = `<button class="btn-status" style="background-color: gray; color: white;" disabled>Trống</button>`;
-                            continue;
-                        }
-                        const cache = await caches.open(currentCacheName);
-                        let needsUpdate = false;
-                        for (let url of urls) {
-                            const match = await cache.match(url);
-                            if (!match) { needsUpdate = true; break; }
-                        }
-                        if (needsUpdate) {
-                            btnContainer.innerHTML = `<button class="btn-status" style="background-color: #28a745; color: white;" onclick="updateImages()">Cần Cập Nhật</button>`;
-                        } else {
-                            btnContainer.innerHTML = `<button class="btn-status" style="background-color: #ffc107; color: black;" disabled>Đã Mới Nhất</button>`;
-                        }
-                    } catch (err) {
-                        btnContainer.innerHTML = `<button class="btn-status" style="background-color: gray; color: white;" disabled>Lỗi</button>`;
+                    // Logic kiểm tra mới an toàn hơn
+                    const expectedUrls = getExpectedImageUrls();
+                    const syncedUrls = JSON.parse(localStorage.getItem('imageList_synced') || '[]');
+                    
+                    if (JSON.stringify(expectedUrls) !== JSON.stringify(syncedUrls)) {
+                        btnContainer.innerHTML = `<button class="btn-status" style="background-color: #28a745; color: white;" onclick="updateImages()">Cần Cập Nhật</button>`;
+                    } else {
+                        btnContainer.innerHTML = `<button class="btn-status" style="background-color: #ffc107; color: black;" disabled>Đã Mới Nhất</button>`;
                     }
                 }
             }
@@ -304,6 +329,7 @@
                 document.getElementById('time_' + key).innerText = 'Lần tải: ' + now;
                 document.getElementById('btn_' + key).innerHTML = `<button class="btn-status" style="background-color: #ffc107; color: black;" disabled>Đã Mới Nhất</button>`;
                 renderDropdowns(); 
+                notifyUpdateBadge();
                 if (key === 'dcuList') document.getElementById('syncTime').innerText = "Cập nhật: " + now;
             }
         }
