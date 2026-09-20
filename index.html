@@ -1,80 +1,45 @@
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Phát triển bởi: Chan Canh Chua (C3)</title>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <style>
-        body { font-family: Arial, sans-serif; padding: 15px; margin: 0; }
-        select, button { width: 100%; padding: 12px; margin-bottom: 15px; font-size: 16px; }
-        .result-box { padding: 15px; border: 1px solid #ccc; border-radius: 8px; margin-top: 10px; }
-    </style>
-</head>
 <body>
-    <h2>Tra cứu Đấu dây DCU & Công tơ</h2>
-    <label>Chọn loại DCU:</label>
-    <select id="dcuSelect"><option value="">-- Đang tải dữ liệu --</option></select>
-    <label>Chọn loại Công tơ:</label>
-    <select id="congToSelect"><option value="">-- Đang tải dữ liệu --</option></select>
-    
-    <div id="result" class="result-box">
-        <b>Kết nối mạng để tải dữ liệu lần đầu...</b>
+    <!-- MÀN HÌNH 1: TRANG CHỦ -->
+    <div id="homeScreen">
+        <h2 style="text-align: center; margin-bottom: 30px;">MENU CHỨC NĂNG</h2>
+        <button onclick="openTab('dcuTab')" style="background-color: #007bff; color: white; border: none; border-radius: 8px; font-weight: bold; height: 80px;">
+            Đấu dây tín hiệu DCU và Công tơ
+        </button>
+        <button onclick="alert('Chức năng này đang được phát triển!')" style="background-color: #28a745; color: white; border: none; border-radius: 8px; font-weight: bold; height: 80px;">
+            Đấu dây tín hiệu Modem và Công tơ
+        </button>
+    </div>
+
+    <!-- MÀN HÌNH 2: TRA CỨU DCU -->
+    <div id="dcuTab" style="display: none;">
+        <button onclick="goHome()" style="background-color: #dc3545; color: white; border: none; border-radius: 8px; width: auto; padding: 10px 20px;">
+            ⬅ Quay lại
+        </button>
+        <h2>Tra cứu Đấu dây DCU & Công tơ</h2>
+        
+        <label>Chọn loại DCU:</label>
+        <select id="dcuSelect"><option value="">-- Chọn DCU --</option></select>
+        
+        <label>Chọn loại Công tơ:</label>
+        <select id="congToSelect"><option value="">-- Chọn Công tơ --</option></select>
+        
+        <div id="result" class="result-box">
+            <b>Đã tải dữ liệu xong. Sẵn sàng tra cứu!</b>
+        </div>
     </div>
 
     <script>
-        // Thay bằng URL và KEY thực tế của bạn trên Supabase
-        const _supabase = supabase.createClient('https://kezzrlltzddpdtktfqzk.supabase.co', 'sb_publishable_-OA922t0e8G3z3hM0hwguQ_GIAaGmec');
+        // ... (Giữ nguyên đoạn script kết nối Supabase và loadData() của bạn ở đây) ...
 
-        async function loadData() {
-            try {
-                // Tải dữ liệu DCU
-                const { data: dcuData } = await _supabase.from('Bang DCU').select('*');
-                const dcuSelect = document.getElementById('dcuSelect');
-                dcuSelect.innerHTML = '<option value="">-- Chọn DCU --</option>';
-                if(dcuData) {
-                    dcuData.forEach(item => {
-                        dcuSelect.innerHTML += `<option value="${item['Tín hiệu']}">${item['Loại DCU']}</option>`;
-                    });
-                }
-
-                // Tải dữ liệu Công tơ khớp với tên cột trên ảnh của bạn
-                const { data: ctData } = await _supabase.from('Bang Cong To').select('*');
-                const congToSelect = document.getElementById('congToSelect');
-                congToSelect.innerHTML = '<option value="">-- Chọn Công tơ --</option>';
-                if(ctData) {
-                    ctData.forEach(item => {
-                        congToSelect.innerHTML += `<option value="${item['Tín Hiệu']}">${item['Loại Công Tơ']}</option>`;
-                    });
-                }
-                
-                document.getElementById('result').innerHTML = "<b>Đã tải dữ liệu xong. Sẵn sàng tra cứu!</b>";
-            } catch (error) {
-                console.log("Lỗi tải dữ liệu hoặc đang offline", error);
-            }
+        // HÀM CHUYỂN ĐỔI MÀN HÌNH
+        function openTab(tabId) {
+            document.getElementById('homeScreen').style.display = 'none';
+            document.getElementById(tabId).style.display = 'block';
         }
 
-        // Xử lý hiển thị thông tin đấu dây khi chọn
-        function showResult() {
-            const dcuSig = document.getElementById('dcuSelect').value;
-            const ctSig = document.getElementById('congToSelect').value;
-            
-            let html = '<h3>Kết quả đấu dây:</h3>';
-            if(dcuSig) html += `<p><b>Tín hiệu DCU:</b> ${dcuSig}</p>`;
-            if(ctSig) html += `<p><b>Tín hiệu Công tơ:</b> ${ctSig}</p>`;
-            
-            document.getElementById('result').innerHTML = html;
+        function goHome() {
+            document.getElementById('dcuTab').style.display = 'none';
+            document.getElementById('homeScreen').style.display = 'block';
         }
-
-        document.getElementById('dcuSelect').addEventListener('change', showResult);
-        document.getElementById('congToSelect').addEventListener('change', showResult);
-
-        // Đăng ký Service Worker cho chế độ Offline
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/sw.js');
-        }
-        
-        loadData();
     </script>
 </body>
-</html>
