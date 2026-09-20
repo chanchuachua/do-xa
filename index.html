@@ -78,9 +78,18 @@
             <button class="btn-menu" style="width: 60px; height: auto; margin-bottom: 0; 
                 padding: 10px;" onclick="viewImage('CONGTO', 'congToSelect')">🖼️</button>
         </div>
+        
+        <div id="result" class="result-box">
+            <b>Đang kết nối tải dữ liệu...</b>
+        </div>
+    </div>
 
     <!-- MÀN HÌNH 2B: TRA CỨU MODEM -->
-    <label>Chọn loại Modem:</label>
+    <div id="modemTab" style="display: none;">
+        <button class="btn-back" onclick="goHome()">⬅ Quay lại</button>
+        <h2>Tra cứu Đấu dây Modem & Công tơ</h2>
+
+        <label>Chọn loại Modem:</label>
         <div style="display: flex; gap: 10px; margin-bottom: 15px;">
             <select id="modemSelect" style="margin-bottom: 0;">
                 <option value="">-- Đang tải --</option>
@@ -97,6 +106,11 @@
             <button class="btn-menu" style="width: 60px; height: auto; margin-bottom: 0; 
                 padding: 10px;" onclick="viewImage('CONGTO', 'congToModemSelect')">🖼️</button>
         </div>
+
+        <div id="resultModem" class="result-box">
+            <b>Đang kết nối tải dữ liệu...</b>
+        </div>
+    </div>
 
     <!-- MÀN HÌNH 3: DỮ LIỆU TRÊN MÁY -->
     <div id="offlineTab" style="display: none;">
