@@ -62,7 +62,7 @@
                 if(dcuData) {
                     dcuData.forEach(item => {
                         dcuSelect.innerHTML += 
-                          `<option value="${item['Tín hiệu']}">${item['Loại DCU']}</option>`;
+                          `<option value="${item['Tín Hiệu']}">${item['Loại DCU']}</option>`;
                     });
                 }
 
@@ -88,8 +88,8 @@
             const ctSig = document.getElementById('congToSelect').value;
             
             let html = '<h3>Kết quả đấu dây:</h3>';
-            if(dcuSig) html += `<p><b>Tín hiệu DCU:</b> ${dcuSig}</p>`;
-            if(ctSig) html += `<p><b>Tín hiệu Công tơ:</b> ${ctSig}</p>`;
+            if(dcuSig) html += `<p><b>Tín Hiệu DCU:</b> ${dcuSig}</p>`;
+            if(ctSig) html += `<p><b>Tín Hiệu Công tơ:</b> ${ctSig}</p>`;
             
             document.getElementById('result').innerHTML = html;
         }
