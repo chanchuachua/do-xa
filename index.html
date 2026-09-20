@@ -58,30 +58,40 @@
         async function loadData() {
             try {
                 const { data: dcuData } = await _supabase.from('Bang DCU').select('*');
-                const dcuSelect = document.getElementById('dcuSelect');
-                dcuSelect.innerHTML = '<option value="">-- Chọn DCU --</option>';
-                if(dcuData) {
-                    dcuData.forEach(item => {
-                        dcuSelect.innerHTML += 
-                          `<option value="${item['Tín Hiệu']}">${item['Loại DCU']}</option>`;
-                    });
-                }
-
                 const { data: ctData } = await _supabase.from('Bang Cong To').select('*');
-                const congToSelect = document.getElementById('congToSelect');
-                congToSelect.innerHTML = '<option value="">-- Chọn Công tơ --</option>';
-                if(ctData) {
-                    ctData.forEach(item => {
-                        congToSelect.innerHTML += 
-                          `<option value="${item['Tín Hiệu']}">${item['Loại Công Tơ']}</option>`;
-                    });
-                }
                 
-                document.getElementById('result').innerHTML = 
-                    "<b>Đã tải dữ liệu xong. Sẵn sàng tra cứu!</b>";
+                if (dcuData && ctData) {
+                    localStorage.setItem('dcuList', JSON.stringify(dcuData));
+                    localStorage.setItem('ctList', JSON.stringify(ctData));
+                }
             } catch (error) {
-                console.log("Lỗi tải dữ liệu", error);
+                console.log("Offline: Dùng dữ liệu lưu trong máy");
             }
+
+            const localDcu = JSON.parse(localStorage.getItem('dcuList'));
+            const localCt = JSON.parse(localStorage.getItem('ctList'));
+            const dcuSelect = document.getElementById('dcuSelect');
+            dcuSelect.innerHTML = '<option value="">-- Chọn DCU --</option>';
+            
+            if (localDcu) {
+                localDcu.forEach(item => {
+                    dcuSelect.innerHTML += 
+                        `<option value="${item['Tín Hiệu']}">${item['Loại DCU']}</option>`;
+                });
+            }
+
+            const congToSelect = document.getElementById('congToSelect');
+            congToSelect.innerHTML = '<option value="">-- Chọn Công tơ --</option>';
+            
+            if (localCt) {
+                localCt.forEach(item => {
+                    congToSelect.innerHTML += 
+                        `<option value="${item['Tín Hiệu']}">${item['Loại Công Tơ']}</option>`;
+                });
+            }
+            
+            document.getElementById('result').innerHTML = 
+                "<b>Đã tải dữ liệu xong. Sẵn sàng tra cứu!</b>";
         }
 
         function showResult() {
