@@ -62,39 +62,41 @@
         <h2>Tra cứu Đấu dây DCU & Công tơ</h2>
         
         <label>Chọn loại DCU:</label>
-        <select id="dcuSelect">
-            <option value="">-- Đang tải dữ liệu --</option>
-        </select>
+        <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+            <select id="dcuSelect" style="margin-bottom: 0;">
+                <option value="">-- Đang tải --</option>
+            </select>
+            <button class="btn-menu" style="width: 60px; height: auto; margin-bottom: 0; 
+                padding: 10px;" onclick="viewImage('DCU', 'dcuSelect')">🖼️</button>
+        </div>
         
         <label>Chọn loại Công tơ:</label>
-        <select id="congToSelect">
-            <option value="">-- Đang tải dữ liệu --</option>
-        </select>
-        
-        <div id="result" class="result-box">
-            <b>Đang kết nối tải dữ liệu...</b>
+        <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+            <select id="congToSelect" style="margin-bottom: 0;">
+                <option value="">-- Đang tải --</option>
+            </select>
+            <button class="btn-menu" style="width: 60px; height: auto; margin-bottom: 0; 
+                padding: 10px;" onclick="viewImage('CONGTO', 'congToSelect')">🖼️</button>
         </div>
-    </div>
 
     <!-- MÀN HÌNH 2B: TRA CỨU MODEM -->
-    <div id="modemTab" style="display: none;">
-        <button class="btn-back" onclick="goHome()">⬅ Quay lại</button>
-        <h2>Tra cứu Đấu dây Modem & Công tơ</h2>
-        
-        <label>Chọn loại Modem:</label>
-        <select id="modemSelect">
-            <option value="">-- Đang tải dữ liệu --</option>
-        </select>
+    <label>Chọn loại Modem:</label>
+        <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+            <select id="modemSelect" style="margin-bottom: 0;">
+                <option value="">-- Đang tải --</option>
+            </select>
+            <button class="btn-menu" style="width: 60px; height: auto; margin-bottom: 0; 
+                padding: 10px;" onclick="viewImage('MODEM', 'modemSelect')">🖼️</button>
+        </div>
         
         <label>Chọn loại Công tơ:</label>
-        <select id="congToModemSelect">
-            <option value="">-- Đang tải dữ liệu --</option>
-        </select>
-        
-        <div id="resultModem" class="result-box">
-            <b>Đang kết nối tải dữ liệu...</b>
+        <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+            <select id="congToModemSelect" style="margin-bottom: 0;">
+                <option value="">-- Đang tải --</option>
+            </select>
+            <button class="btn-menu" style="width: 60px; height: auto; margin-bottom: 0; 
+                padding: 10px;" onclick="viewImage('CONGTO', 'congToModemSelect')">🖼️</button>
         </div>
-    </div>
 
     <!-- MÀN HÌNH 3: DỮ LIỆU TRÊN MÁY -->
     <div id="offlineTab" style="display: none;">
