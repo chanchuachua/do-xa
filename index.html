@@ -22,7 +22,10 @@
     <!-- MÀN HÌNH 1: TRANG CHỦ -->
     <div id="homeScreen">
         <h2 style="text-align: center; margin-bottom: 5px;">MENU CHỨC NĂNG ĐO XA</h2>
-        <p style="text-align: center; margin-top: 0; margin-bottom: 25px; color: gray;">v1.02</p>
+        <p style="text-align: center; margin-top: 0; margin-bottom: 25px; color: gray;">
+            <span id="appVersion" style="font-weight: bold; color: #007bff;">Đang tải...</span> <br>
+            <span id="syncTime" style="font-size: 14px; color: #28a745;">Đang kiểm tra...</span>
+        </p>
         <button class="btn-menu" style="background-color: #007bff;" 
             onclick="openTab('dcuTab')">
             Đấu dây tín hiệu DCU và Công tơ
@@ -123,6 +126,7 @@
         }
         
         loadData();
+        getVersion();
     </script>
 </body>
 </html>
