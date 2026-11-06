@@ -1,4 +1,4 @@
-const CACHE_NAME = 'do-xa-v1.15';
+const CACHE_NAME = 'do-xa-v1.16';
 const urlsToCache = [
   './',
   './index.html',
