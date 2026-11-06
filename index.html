@@ -218,13 +218,7 @@
             
             const modemSelect = document.getElementById('modemSelect');
             modemSelect.innerHTML = '<option value="">-- Chọn Modem --</option>';
-            if (localModem) {
-                localModem.forEach(item => {
-                    let tenModem = item['Loại MODEM'].toUpperCase();
-                    modemSelect.innerHTML += 
-                        `<option value="${item['Tín Hiệu']}">${tenModem}</option>`;
-                });
-            }
+            if (localModem) {localModem.forEach(item => {modemSelect.innerHTML += `<option value="${item['Tín Hiệu']}">${item['Loại MODEM']}</option>`;});}
 
             const congToModemSelect = document.getElementById('congToModemSelect');
             congToModemSelect.innerHTML = '<option value="">-- Chọn Công tơ --</option>';
